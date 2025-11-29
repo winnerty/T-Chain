@@ -2,6 +2,7 @@ import java.security.*;
 import java.security.spec.ECGenParameterSpec;
 
 public class Wallet {
+
     public PublicKey publicKey;
     public PrivateKey privateKey;
 
@@ -22,4 +23,5 @@ public class Wallet {
             throw new RuntimeException(e);
         }
     }
+
 }

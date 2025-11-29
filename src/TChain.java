@@ -27,6 +27,7 @@ public class TChain {
     }
 
     public static boolean isChainValid() {
+
         Block currentBlock;
         Block previousBlock;
 
@@ -44,6 +45,7 @@ public class TChain {
         }
 
         return true;
+
     }
 
 }
