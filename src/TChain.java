@@ -10,6 +10,7 @@ public class TChain {
     public static int difficulty = 5;
     public static Wallet walletA;
     public static Wallet walletB;
+    public static float minimumTransaction = 0.1F;
 
     public static void main(String[] args) {
         Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());

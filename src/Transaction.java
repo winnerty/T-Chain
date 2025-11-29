@@ -42,8 +42,54 @@ public class Transaction {
     }
 
     public boolean processTransaction() {
-        //TODO
+
+        if (!verifySignature()) {
+            System.out.println("Transaction Signature failed to verify");
+            return false;
+        }
+
+        for (TransactionInput i : inputs) {
+            i.UTXO = TChain.UTXOs.get(i.transactionOutputId);
+        }
+
+        if (getInputsValue() < TChain.minimumTransaction) {
+            System.out.println("#Transaction Input to small: " + getInputsValue());
+            return false;
+        }
+
+        float leftOver = getInputsValue() - value;
+        transactionId = calculateHash();
+        outputs.add(new TransactionOutput(this.recipient, value, transactionId));
+        outputs.add(new TransactionOutput(this.sender, leftOver, transactionId));
+
+        for (TransactionOutput o : outputs) {
+            TChain.UTXOs.put(o.id, o);
+        }
+
+        for (TransactionInput i : inputs) {
+            if (i.UTXO == null) continue;
+            TChain.UTXOs.remove(i.UTXO.id);
+        }
+
         return true;
+
+    }
+
+    public float getInputsValue() {
+        float total = 0;
+        for (TransactionInput i : inputs) {
+            if (i.UTXO == null) continue;
+            total += i.UTXO.value;
+        }
+        return total;
+    }
+
+    public float getOutputsValue() {
+        float total = 0;
+        for (TransactionOutput o : outputs) {
+            total += o.value;
+        }
+        return total;
     }
 
 }
