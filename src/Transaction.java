@@ -41,4 +41,9 @@ public class Transaction {
         return StringUtil.verifyECDSASig(sender, data, signature);
     }
 
+    public boolean processTransaction() {
+        //TODO
+        return true;
+    }
+
 }
